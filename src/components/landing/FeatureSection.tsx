@@ -37,7 +37,7 @@ const FeatureSection = () => {
     {
       icon: <Sparkles className="w-7 h-7 text-primary" />,
       title: "Goodbye Chaos, Hello Smart Reception",
-      description: "Tired of missed calls and patients asking the same questions? Our platform turns WhatsApp into a 24/7 virtual receptionist that automates appointments, answers FAQs, and reduces no-shows by up to 40%. No training, no CRM complexity — just plug and play.",
+      description: "Turn WhatsApp into a 24/7 receptionist. Automate bookings, answer FAQs, and cut no-shows by up to 40% — no training needed.",
     },
     {
       icon: <Building2 className="w-7 h-7 text-primary" />,
