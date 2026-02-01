@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
+import LanguageToggle from "@/components/LanguageToggle";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/lib/translations";
 
 const Header = () => {
+  const { language } = useLanguage();
+  const t = translations[language].header;
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,20 +23,23 @@ const Header = () => {
           {/* Navigation - hidden on mobile */}
           <nav className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
-              Features
+              {t.features}
             </a>
             <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
-              How It Works
+              {t.howItWorks}
             </a>
             <a href="#security" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
-              Security
+              {t.security}
             </a>
           </nav>
 
-          {/* CTA */}
-          <Button size="sm">
-            Get Started
-          </Button>
+          {/* Language Toggle & CTA */}
+          <div className="flex items-center gap-3">
+            <LanguageToggle />
+            <Button size="sm">
+              {t.getStarted}
+            </Button>
+          </div>
         </div>
       </div>
     </header>
