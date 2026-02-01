@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/lib/translations";
 
 const CTASection = () => {
-  const benefits = [
-    "No credit card required",
-    "Setup in under 5 minutes",
-    "Free 14-day trial",
-  ];
+  const { language, isRTL } = useLanguage();
+  const t = translations[language].cta;
 
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
@@ -23,16 +22,16 @@ const CTASection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
-            Ready to Transform Your Clinic?
+            {t.title}
           </h2>
           
           <p className="text-lg sm:text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-            Join hundreds of clinics across MENA that have already automated their patient communication.
+            {t.subtitle}
           </p>
           
           {/* Benefits list */}
           <div className="flex flex-wrap items-center justify-center gap-6 mb-10">
-            {benefits.map((benefit) => (
+            {t.benefits.map((benefit) => (
               <div key={benefit} className="flex items-center gap-2">
                 <div className="w-5 h-5 rounded-full bg-primary-foreground/20 flex items-center justify-center">
                   <Check className="w-3 h-3 text-primary-foreground" />
@@ -44,8 +43,8 @@ const CTASection = () => {
           
           {/* CTA Button */}
           <Button variant="hero-outline" size="lg" className="group">
-            Get Started Now
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            {t.button}
+            <ArrowRight className={`w-5 h-5 transition-transform ${isRTL ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
           </Button>
         </div>
       </div>

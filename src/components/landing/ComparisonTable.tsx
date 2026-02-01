@@ -1,45 +1,11 @@
 import { Check, X, Heart } from "lucide-react";
-
-const comparisonData = [
-  {
-    feature: "Built specifically for clinics",
-    clinicBot: true,
-    generic: false,
-    emotion: "Understands your world",
-  },
-  {
-    feature: "Arabic & English bilingual",
-    clinicBot: true,
-    generic: false,
-    emotion: "Your patients feel heard",
-  },
-  {
-    feature: "Medical-grade privacy",
-    clinicBot: true,
-    generic: false,
-    emotion: "Sleep soundly at night",
-  },
-  {
-    feature: "Pre-built clinic workflows",
-    clinicBot: true,
-    generic: false,
-    emotion: "No setup headaches",
-  },
-  {
-    feature: "MENA compliance ready",
-    clinicBot: true,
-    generic: false,
-    emotion: "No legal surprises",
-  },
-  {
-    feature: "Dedicated clinic support",
-    clinicBot: true,
-    generic: false,
-    emotion: "Someone who gets it",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/lib/translations";
 
 const ComparisonTable = () => {
+  const { language } = useLanguage();
+  const t = translations[language].comparison;
+
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-[image:var(--gradient-surface)]" />
@@ -48,13 +14,13 @@ const ComparisonTable = () => {
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="inline-block px-4 py-1.5 rounded-full bg-accent text-accent-foreground text-sm font-medium mb-4">
-            Why Us
+            {t.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Not Just Another Chatbot
+            {t.title}
           </h2>
           <p className="text-lg text-muted-foreground">
-            Generic tools weren't built with your clinic in mind. We were.
+            {t.subtitle}
           </p>
         </div>
 
@@ -64,25 +30,25 @@ const ComparisonTable = () => {
             {/* Header */}
             <div className="grid grid-cols-3 bg-secondary/50 border-b border-border">
               <div className="p-4 md:p-6">
-                <span className="text-sm font-medium text-muted-foreground">Feature</span>
+                <span className="text-sm font-medium text-muted-foreground">{t.feature}</span>
               </div>
               <div className="p-4 md:p-6 text-center border-x border-border bg-accent/50">
                 <div className="flex items-center justify-center gap-2">
                   <Heart className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-bold text-primary">ClinicBot</span>
+                  <span className="text-sm font-bold text-primary">{t.clinicBot}</span>
                 </div>
               </div>
               <div className="p-4 md:p-6 text-center">
-                <span className="text-sm font-medium text-muted-foreground">Generic Tools</span>
+                <span className="text-sm font-medium text-muted-foreground">{t.genericTools}</span>
               </div>
             </div>
             
             {/* Rows */}
-            {comparisonData.map((row, index) => (
+            {t.features.map((row, index) => (
               <div
-                key={row.feature}
+                key={index}
                 className={`grid grid-cols-3 ${
-                  index !== comparisonData.length - 1 ? "border-b border-border" : ""
+                  index !== t.features.length - 1 ? "border-b border-border" : ""
                 }`}
               >
                 <div className="p-4 md:p-6">
@@ -105,7 +71,7 @@ const ComparisonTable = () => {
           
           {/* Bottom note */}
           <p className="text-center text-sm text-muted-foreground mt-6">
-            Built for clinics like yours — because you deserve tools that understand healthcare.
+            {t.bottomNote}
           </p>
         </div>
       </div>

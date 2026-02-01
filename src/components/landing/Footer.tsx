@@ -1,6 +1,11 @@
 import { MessageCircle } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/lib/translations";
 
 const Footer = () => {
+  const { language } = useLanguage();
+  const t = translations[language].footer;
+
   return (
     <footer className="py-12 bg-card border-t border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,19 +21,19 @@ const Footer = () => {
           {/* Links */}
           <div className="flex items-center gap-8">
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Privacy Policy
+              {t.privacy}
             </a>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Terms of Service
+              {t.terms}
             </a>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Contact
+              {t.contact}
             </a>
           </div>
           
           {/* Copyright */}
           <p className="text-sm text-muted-foreground">
-            © 2026 ClinicBot. All rights reserved.
+            {t.copyright}
           </p>
         </div>
       </div>

@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import { Sparkles, Building2, Shield } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translations } from "@/lib/translations";
 
 interface FeatureCardProps {
   icon: ReactNode;
@@ -33,22 +35,13 @@ const FeatureCard = ({ icon, title, description, delay }: FeatureCardProps) => (
 );
 
 const FeatureSection = () => {
-  const features = [
-    {
-      icon: <Sparkles className="w-7 h-7 text-primary" />,
-      title: "Goodbye Chaos, Hello Smart Reception",
-      description: "Turn WhatsApp into a 24/7 receptionist. Automate bookings, answer FAQs, and cut no-shows by up to 40% — no training needed.",
-    },
-    {
-      icon: <Building2 className="w-7 h-7 text-primary" />,
-      title: "Built for Clinics. Not Just Another Chatbot.",
-      description: "We've designed this tool specifically for Dental and Dermatology clinics. From post-treatment check-ins to annual cleaning reminders, every workflow is pre-built and ready to go. Plus, we're optimized for bilingual (Arabic/English) conversations and local patient habits in MENA.",
-    },
-    {
-      icon: <Shield className="w-7 h-7 text-primary" />,
-      title: "Protect Patient Trust with Privacy First",
-      description: "Unlike generic tools, our platform was built from the ground up for medical-grade privacy. No more mixing personal chats with patient data. With enterprise-level encryption and secure separation, you stay compliant and professional at every step.",
-    },
+  const { language } = useLanguage();
+  const t = translations[language].featureSection;
+
+  const icons = [
+    <Sparkles className="w-7 h-7 text-primary" />,
+    <Building2 className="w-7 h-7 text-primary" />,
+    <Shield className="w-7 h-7 text-primary" />,
   ];
 
   return (
@@ -60,22 +53,22 @@ const FeatureSection = () => {
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="inline-block px-4 py-1.5 rounded-full bg-accent text-accent-foreground text-sm font-medium mb-4">
-            Why Choose Us
+            {t.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Everything Your Clinic Needs
+            {t.title}
           </h2>
           <p className="text-lg text-muted-foreground">
-            Purpose-built automation that understands healthcare, not just chat.
+            {t.subtitle}
           </p>
         </div>
         
         {/* Feature cards */}
         <div className="grid md:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
+          {t.features.map((feature, index) => (
             <FeatureCard
-              key={feature.title}
-              icon={feature.icon}
+              key={index}
+              icon={icons[index]}
               title={feature.title}
               description={feature.description}
               delay={`${index * 0.1}s`}
