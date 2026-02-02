@@ -1,48 +1,76 @@
-import { ReactNode } from "react";
-import { Sparkles, Building2, Shield } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations } from "@/lib/translations";
+import { Check } from "lucide-react";
 
-interface FeatureCardProps {
-  icon: ReactNode;
+import featureChatMockup from "@/assets/feature-chat-mockup.png";
+import featureDashboardMockup from "@/assets/feature-dashboard-mockup.png";
+import featureSecurityMockup from "@/assets/feature-security-mockup.png";
+
+const featureImages = [featureChatMockup, featureDashboardMockup, featureSecurityMockup];
+
+interface FeatureRowProps {
   title: string;
   description: string;
-  delay: string;
+  image: string;
+  badge: string;
+  reverse: boolean;
+  isRTL: boolean;
 }
 
-const FeatureCard = ({ icon, title, description, delay }: FeatureCardProps) => (
-  <div 
-    className="group relative bg-[image:var(--gradient-card)] rounded-3xl p-8 border border-border hover:border-primary/30 transition-all duration-500 hover:shadow-card"
-    style={{ animationDelay: delay }}
-  >
-    {/* Glow effect on hover */}
-    <div className="absolute inset-0 rounded-3xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-    
-    <div className="relative z-10">
-      <div className="w-14 h-14 rounded-2xl bg-accent flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-        {icon}
+const FeatureRow = ({ title, description, badge, image, reverse, isRTL }: FeatureRowProps) => {
+  // In RTL mode, reverse the visual order
+  const shouldReverse = isRTL ? !reverse : reverse;
+  
+  return (
+    <div className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-16 ${shouldReverse ? 'lg:flex-row-reverse' : ''}`}>
+      {/* Content */}
+      <div className="flex-1 space-y-6">
+        <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
+          {badge}
+        </span>
+        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
+          {title}
+        </h3>
+        <p className="text-muted-foreground text-lg leading-relaxed">
+          {description}
+        </p>
+        {/* Feature bullets - visual enhancement */}
+        <div className="flex flex-wrap gap-3 pt-2">
+          {[1, 2, 3].map((_, i) => (
+            <div key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
+                <Check className="w-3 h-3 text-primary" />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
       
-      <h3 className="text-xl font-bold text-foreground mb-4">
-        {title}
-      </h3>
-      
-      <p className="text-muted-foreground leading-relaxed">
-        {description}
-      </p>
+      {/* Image */}
+      <div className="flex-1 relative">
+        <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+          <img 
+            src={image} 
+            alt={title}
+            className="w-full h-auto object-cover"
+          />
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/10 to-transparent pointer-events-none" />
+        </div>
+        {/* Decorative blur */}
+        <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-primary/20 rounded-full blur-3xl" />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const FeatureSection = () => {
-  const { language } = useLanguage();
+  const { language, isRTL } = useLanguage();
   const t = translations[language].featureSection;
 
-  const icons = [
-    <Sparkles className="w-7 h-7 text-primary" />,
-    <Building2 className="w-7 h-7 text-primary" />,
-    <Shield className="w-7 h-7 text-primary" />,
-  ];
+  const badges = language === 'en' 
+    ? ['Smart Automation', 'Clinic-First Design', 'Enterprise Security']
+    : ['أتمتة ذكية', 'تصميم للعيادات', 'أمان مؤسسي'];
 
   return (
     <section id="features" className="py-24 md:py-32 relative overflow-hidden">
@@ -51,7 +79,7 @@ const FeatureSection = () => {
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-20">
           <span className="inline-block px-4 py-1.5 rounded-full bg-accent text-accent-foreground text-sm font-medium mb-4">
             {t.badge}
           </span>
@@ -63,15 +91,17 @@ const FeatureSection = () => {
           </p>
         </div>
         
-        {/* Feature cards */}
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Feature rows */}
+        <div className="space-y-24 lg:space-y-32">
           {t.features.map((feature, index) => (
-            <FeatureCard
+            <FeatureRow
               key={index}
-              icon={icons[index]}
               title={feature.title}
               description={feature.description}
-              delay={`${index * 0.1}s`}
+              badge={badges[index]}
+              image={featureImages[index]}
+              reverse={index % 2 === 1}
+              isRTL={isRTL}
             />
           ))}
         </div>
